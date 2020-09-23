@@ -1,0 +1,50 @@
+{
+    "name": "Net_LCZ",
+    "n_gpu": 5,
+
+    "arch": {
+        "type": "Net_LCZ",
+        "args": {}
+    },
+    "data_loader": {
+        "type": "LCZDataLoader",
+        "args":{
+            "data_dir": "/work/qiu/LCZ_pytorch-meta/Sentinel4LCZ_ML_FS/src/testcities.csv",
+            "batch_size": 32,
+            "shuffle": true,
+            "num_workers": 2
+        }
+    },
+
+    "optimizer": {
+        "type": "Adam",
+        "args":{
+            "lr": 0.001,
+            "weight_decay": 0,
+            "amsgrad": true
+        }
+    },
+    "loss": "cel_loss",
+    "metrics": [
+        "accuracy", "top_k_acc"
+    ],
+    "lr_scheduler": {
+        "type": "StepLR",
+        "args": {
+            "step_size": 50,
+            "gamma": 0.1
+        }
+    },
+    "trainer": {
+        "epochs": 100,
+
+        "save_dir": "saved/",
+        "save_period": 1,
+        "verbosity": 2,
+
+        "monitor": "min val_loss",
+        "early_stop": 10,
+
+        "tensorboard": true
+    }
+}
